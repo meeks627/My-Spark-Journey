@@ -34,7 +34,3 @@ SPARK Academy has given me a deeper understanding of AI concepts while honing my
 ## Acknowledgments
 Big thanks to my mentors and peers at SPARK Academy for their guidance and support.
 
----
-
-Feel free to explore the projects and join me on this exciting journey into AI and medical imaging!
-
