@@ -1,0 +1,90 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Exercise 1
+      id: exercise-1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exercise 1
+        setup-command: pip install pytest
+        command: pytest test_if_elif_else_statements.py
+        timeout: 10
+        max-score: 10
+    - name: Exe 2
+      id: exe-2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 2
+        setup-command: pip install pytest
+        command: pytest test_if_else_statements.py
+        timeout: 10
+        max-score: 10
+    - name: Exe 3
+      id: exe-3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 3
+        setup-command: pip install pytest
+        command: pytest test_list_comprehension.py
+        timeout: 10
+        max-score: 15
+    - name: Exe 4
+      id: exe-4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 4
+        setup-command: pip install pytest
+        command: pytest test_lists_and_dictionaries.py
+        timeout: 10
+        max-score: 15
+    - name: Exe 5
+      id: exe-5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 5
+        setup-command: pip install pytest
+        command: pytest test_loops.py
+        timeout: 10
+        max-score: 12
+    - name: Exe 6
+      id: exe-6
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 6
+        setup-command: pip install pytest
+        command: pytest test_manipulation_variable.py
+        timeout: 10
+        max-score: 13
+    - name: Exe 7
+      id: exe-7
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Exe 7
+        setup-command: pip insatll pytest
+        command: pytest test_numpy_operations.py
+        timeout: 10
+        max-score: 25
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        EXERCISE-1_RESULTS: "${{steps.exercise-1.outputs.result}}"
+        EXE-2_RESULTS: "${{steps.exe-2.outputs.result}}"
+        EXE-3_RESULTS: "${{steps.exe-3.outputs.result}}"
+        EXE-4_RESULTS: "${{steps.exe-4.outputs.result}}"
+        EXE-5_RESULTS: "${{steps.exe-5.outputs.result}}"
+        EXE-6_RESULTS: "${{steps.exe-6.outputs.result}}"
+        EXE-7_RESULTS: "${{steps.exe-7.outputs.result}}"
+      with:
+        runners: exercise-1,exe-2,exe-3,exe-4,exe-5,exe-6,exe-7

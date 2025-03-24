@@ -1,0 +1,140 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Patient Risk Assessment
+      id: patient-risk-assessment
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Patient Risk Assessment
+        setup-command: pip install numpy pytest
+        command: pytest test_assess_risk.py
+        timeout: 10
+        max-score: 9
+    - name: Blood Sugar Level Alert (if/elif/else)
+      id: blood-sugar-level-alert-if-elif-else
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Blood Sugar Level Alert (if/elif/else)
+        setup-command: pip install numpy pytest
+        command: pytest test_check_glucose.py
+        timeout: 10
+        max-score: 9
+    - name: Detect Abnormal Heart Rates (Loop & Condition)
+      id: detect-abnormal-heart-rates-loop-condition
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Detect Abnormal Heart Rates (Loop & Condition)
+        setup-command: pip install numpy pytest
+        command: pytest test_detect_arrhythmia.py
+        timeout: 10
+        max-score: 9
+    - name: Average Tumor Size (Loops & Lists)
+      id: average-tumor-size-loops-lists
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Average Tumor Size (Loops & Lists)
+        setup-command: pip install numpy pytest
+        command: pytest test_average_tumor_size.py
+        timeout: 10
+        max-score: 9
+    - name: Normalize MRI Pixel Values (NumPy)
+      id: normalize-mri-pixel-values-numpy
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Normalize MRI Pixel Values (NumPy)
+        setup-command: pip install numpy pytest
+        command: pytest test_normalize_mri.py
+        timeout: 10
+        max-score: 9
+    - name: Compute Patient Temperature Stats (NumPy)
+      id: compute-patient-temperature-stats-numpy
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Compute Patient Temperature Stats (NumPy)
+        setup-command: pip install numpy pytest
+        command: pytest test_temperature_stats.py
+        timeout: 10
+        max-score: 9
+    - name: Detect Outlier Blood Pressures (NumPy)
+      id: detect-outlier-blood-pressures-numpy
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Detect Outlier Blood Pressures (NumPy)
+        setup-command: pip install numpy pytest
+        command: pytest test_detect_outliers.py
+        timeout: 10
+        max-score: 9
+    - name: Detect COVID Symptoms (Lists & Conditions)
+      id: detect-covid-symptoms-lists-conditions
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Detect COVID Symptoms (Lists & Conditions)
+        setup-command: pip install numpy pytest
+        command: pytest test_covid_symptoms_checker.py
+        timeout: 10
+        max-score: 9
+    - name: Factorial (Recursion)
+      id: factorial-recursion
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Factorial (Recursion)
+        setup-command: pip install numpy pytest
+        command: pytest test_factorial.py
+        timeout: 10
+        max-score: 9
+    - name: Count Tumor Cells (Nested Loops)
+      id: count-tumor-cells-nested-loops
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Count Tumor Cells (Nested Loops)
+        setup-command: pip install numpy pytest
+        command: pytest test_count_tumor_cells.py
+        timeout: 10
+        max-score: 9
+    - name: Reverse a Patient’s Name (String Manipulation)
+      id: reverse-a-patient-s-name-string-manipulation
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Reverse a Patient’s Name (String Manipulation)
+        setup-command: pip install numpy pytest
+        command: pytest test_reverse_name.py
+        timeout: 10
+        max-score: 9
+    - name: Finding First Cancerous Cell (Break & Continue)
+      id: finding-first-cancerous-cell-break-continue
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Finding First Cancerous Cell (Break & Continue)
+        setup-command: pip install numpy pytest
+        command: pytest test_find_cancerous_cell.py
+        timeout: 10
+        max-score: 9
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PATIENT-RISK-ASSESSMENT_RESULTS: "${{steps.patient-risk-assessment.outputs.result}}"
+        BLOOD-SUGAR-LEVEL-ALERT-IF-ELIF-ELSE_RESULTS: "${{steps.blood-sugar-level-alert-if-elif-else.outputs.result}}"
+        DETECT-ABNORMAL-HEART-RATES-LOOP-CONDITION_RESULTS: "${{steps.detect-abnormal-heart-rates-loop-condition.outputs.result}}"
+        AVERAGE-TUMOR-SIZE-LOOPS-LISTS_RESULTS: "${{steps.average-tumor-size-loops-lists.outputs.result}}"
+        NORMALIZE-MRI-PIXEL-VALUES-NUMPY_RESULTS: "${{steps.normalize-mri-pixel-values-numpy.outputs.result}}"
+        COMPUTE-PATIENT-TEMPERATURE-STATS-NUMPY_RESULTS: "${{steps.compute-patient-temperature-stats-numpy.outputs.result}}"
+        DETECT-OUTLIER-BLOOD-PRESSURES-NUMPY_RESULTS: "${{steps.detect-outlier-blood-pressures-numpy.outputs.result}}"
+        DETECT-COVID-SYMPTOMS-LISTS-CONDITIONS_RESULTS: "${{steps.detect-covid-symptoms-lists-conditions.outputs.result}}"
+        FACTORIAL-RECURSION_RESULTS: "${{steps.factorial-recursion.outputs.result}}"
+        COUNT-TUMOR-CELLS-NESTED-LOOPS_RESULTS: "${{steps.count-tumor-cells-nested-loops.outputs.result}}"
+        REVERSE-A-PATIENT-S-NAME-STRING-MANIPULATION_RESULTS: "${{steps.reverse-a-patient-s-name-string-manipulation.outputs.result}}"
+        FINDING-FIRST-CANCEROUS-CELL-BREAK-CONTINUE_RESULTS: "${{steps.finding-first-cancerous-cell-break-continue.outputs.result}}"
+      with:
+        runners: patient-risk-assessment,blood-sugar-level-alert-if-elif-else,detect-abnormal-heart-rates-loop-condition,average-tumor-size-loops-lists,normalize-mri-pixel-values-numpy,compute-patient-temperature-stats-numpy,detect-outlier-blood-pressures-numpy,detect-covid-symptoms-lists-conditions,factorial-recursion,count-tumor-cells-nested-loops,reverse-a-patient-s-name-string-manipulation,finding-first-cancerous-cell-break-continue
